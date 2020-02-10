@@ -350,7 +350,7 @@ p_test_tailcdf = ggplot(d_test_big,
   scale_x_continuous( 
     trans = tailcdf_trans(base=10, scale = 5),
     # trans = "log10",
-    # breaks = scales::breaks_log(base=10),
+    breaks = c(0,0.5,0.9,0.99,0.999,0.9999,0.99999,1.0),
     label = percent
     ) +
   scale_y_continuous(
