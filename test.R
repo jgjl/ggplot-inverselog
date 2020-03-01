@@ -348,9 +348,9 @@ p_test_tailcdf = ggplot(d_test_big,
   # stat_ecdf() +
   geom_step() +
   scale_x_continuous( 
-    trans = tailcdf_trans(base=10, scale = 5),
+    trans = tailcdf_trans(base=10, scale = 4),
     # trans = "log10",
-    breaks = c(0,0.5,0.9,0.99,0.999,0.9999,0.99999,1.0),
+    breaks = c(0,0.5,0.9,0.99,0.999,0.9999,0.99999),
     label = percent
     ) +
   scale_y_continuous(
