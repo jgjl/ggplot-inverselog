@@ -16,27 +16,15 @@ output_dir = "testresults"
 # Get test data --------------
 d_test_small = tibble('i'=1:100, 'v'=log10(1:100))
 
-# Core functions -------------
 
+# Core functions -------------
 tailcdf_trans <- function(base = exp(1), scale=10) {
   domain = c(base^(-scale), 1.0)
-  trans <- function(x) 
-  {
-    result = -log((domain[2]-squish(x, domain))+domain[1], base=base)
-    return(result)
-  }
-  inv <- function(y)
-  {
-    result = (domain[2]-base^(-y))+domain[1]
-    return(result)
-  }
+  trans <- function(x) -log((domain[2]-squish(x, domain))+domain[1], base=base)
+  inv <- function(y) (domain[2]-base^(-y))+domain[1]
   breaks <- function(n=5)
   {
-    function(b) {
-      b_trans = trans(squish(b, range = domain))
-      result = seq(from=min(b_trans), to=max(b_trans), by=(max(b_trans)-min(b_trans))/n)
-      return(result)
-    } 
+    function(b) seq(from=min(b), to=max(b), by=(max(b)-min(b))/n)
   }
   scales::trans_new(
     name = paste0("tailcdf-", format(base)), 
@@ -146,7 +134,7 @@ p_test_tailcdf = ggplot(d_test_raw,
                         linetype = test)) +
   stat_ecdf() +
   scale_x_continuous( 
-    trans = tailcdf_trans(base=10, scale = 3),
+    trans = tailcdf_trans(base=10, scale = 4),
     # trans = "log10",
     breaks = c(0,0.5,0.9,0.99,0.999,0.9999),
     label = percent
